@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <title>Tabel</title>
+    <style type="text/css">
+      .container{
+        padding-top: 40px;
+      }
+      .table{
+        font-size: 14px;
+      }
+      .form-control{
+        font-size: 14px;
+        padding: 3px;
+      }
+      .table > thead > tr > th{
+        font-size: 13px;
+        text-align: center;
+        color: #fff;
+        vertical-align: middle;
+      }
+      .table > tbody > tr > td{
+        vertical-align: middle;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row justify-content-center">
+        <h1>Planet <b>List</b></h1>
+      </div>
+      <table class="table table-sm table-striped table-bordered">
+        <thead>
+          <tr class="bg-primary">
+            <th>No</th>
+            <th>Name</th>
+            <th>Rotation Period</th>
+            <th>Orbital Period</th>
+            <th>Diameter</th>
+            <th>Climate</th>
+            <th>Gravity</th>
+            <th>Terrain</th>
+            <th>Surface Water</th>
+            <th>Population</th>
+          </tr>
+          <tr>
+            <td><button type="button" class="btn btn-xs btn-primary" onclick="location.reload();"><i class="fas fa-sync-alt size:2x"></i></button></button></td>
+            <td><select class="form-control" id="nama" onchange="select_name();"></select></div></td>
+            <td><select class="form-control" id="rotation_period" onchange="select_rotation();"></select></td>
+            <td><select class="form-control" id="orbital_period" onchange="select_orbital();"></select></td>
+            <td><select class="form-control" id="diameter" onchange="select_diameter();"></select></td>
+            <td><select class="form-control" id="climate" onchange="select_climate();"></select></td>
+            <td><select class="form-control" id="gravity" onchange="select_gravity();"></select></td>
+            <td><select class="form-control" id="terrain" onchange="select_terrain();"></select></td>
+            <td><select class="form-control" id="surface_water" onchange="select_surface();"></select></td>
+            <td><select class="form-control" id="population" onchange="select_population();"></select></td>
+          </tr>
+        </thead>
+        <tbody id="view"></tbody>
+      </table>
+    </div>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="data.js"></script>
+    <script>
+
+      view = document.getElementById("view");
+      number = 1;
+      data.results.forEach(function(item){
+        view.innerHTML += "<tr><td align='center'><b>" + number++ + "</b></td><td>" + item.name + "</td><td>" + item.rotation_period + "</td><td>" + item.orbital_period + "</td><td>" + item.diameter + "</td><td>" + item.climate + "</td><td>" + item.gravity + "</td><td>" + item.terrain + "</td><td>" + item.surface_water + "</td><td>" + item.population + "</td></tr>";
+      });
+
+      var source = data.results;
+      function onlyUnique(value, index, self){
+        return self.indexOf(value) === index;
+      }
+
+      //name
+      nama = document.getElementById("nama");
+      var arr_name = source.map(function (obj){
+        return obj.name;
+      });
+      var unique_name = arr_name.filter(onlyUnique);
+
+      nama.innerHTML += "<option value=''>--- pilih</option>"
+      unique_name.forEach(function(item){
+        nama.innerHTML += "<option value='"+ item + "'>" + item + "</option>";
+      });
+      //filtering nama
+      function select_name(){
+        var change_nama = document.getElementById("nama").value;
+        var filtered_name = source.filter(function(nama){
+          return nama.name.toLowerCase() === change_nama.toLowerCase();
+        });
+        var number = 1;
+        view.innerHTML = "";
+        filtered_name.forEach(function(item){
+          view.innerHTML += "<tr><td align='center'><b>" + number++ + "</b></td><td>" + item.name + "</td><td>" + item.rotation_period + "</td><td>" + item.orbital_period + "</td><td>" + item.diameter + "</td><td>" + item.climate + "</td><td>" + item.gravity + "</td><td>" + item.terrain + "</td><td>" + item.surface_water + "</td><td>" + item.population + "</td></tr>";
+        });
+      }
+      
+      //rotation periode 
+      rotation_p = document.getElementById("rotation_period");
+      var arr_rotation_p = source.map(function (obj){
+        return obj.rotation_period;
+      });
+      var unique_rotation_p = arr_rotation_p.filter(onlyUnique);
+      rotation_p.innerHTML += "<option value=''>--- pilih</option>"
+      unique_rotation_p.forEach(function(item){
+        rotation_p.innerHTML += "<option value='"+ item + "'>" + item + "</option>";
+      });
+      //filtering rotation
+      function select_rotation(){
+        var change_rotation = document.getElementById("rotation_period").value;
+        var filtered_rotation = source.filter(function(rotation){
+          return rotation.rotation_period === change_rotation;
+        });
+        var number = 1;
+        view.innerHTML = "";
+        filtered_rotation.forEach(function(item){
+          view.innerHTML += "<tr><td align='center'><b>" + number++ + "</b></td><td>" + item.name + "</td><td>" + item.rotation_period + "</td><td>" + item.orbital_period + "</td><td>" + item.diameter + "</td><td>" + item.climate + "</td><td>" + item.gravity + "</td><td>" + item.terrain + "</td><td>" + item.surface_water + "</td><td>" + item.population + "</td></tr>";
+        });
+      }
+
+      //orbital periode
+      orbital_p = document.getElementById("orbital_period");
+      var arr_orbital_p = source.map(function (obj){
+        return obj.orbital_period;
+      });
+      var unique_orbital_p = arr_orbital_p.filter(onlyUnique);
+      orbital_p.innerHTML += "<option value=''>--- pilih</option>"
+      unique_orbital_p.forEach(function(item){
+        orbital_p.innerHTML += "<option value='"+ item + "'>" + item + "</option>";
+      });  
+      //filtering orbital
+      function select_orbital(){
+        var change_orbital = document.getElementById("orbital_period").value;
+        var filtered_orbital = source.filter(function(orbital){
+          return orbital.orbital_period === change_orbital;
+        });
+        var number = 1;
+        view.innerHTML = "";
+        filtered_orbital.forEach(function(item){
+          view.innerHTML += "<tr><td align='center'><b>" + number++ + "</b></td><td>" + item.name + "</td><td>" + item.rotation_period + "</td><td>" + item.orbital_period + "</td><td>" + item.diameter + "</td><td>" + item.climate + "</td><td>" + item.gravity + "</td><td>" + item.terrain + "</td><td>" + item.surface_water + "</td><td>" + item.population + "</td></tr>";
+        });
+      }
+
+      //diameter
+      diameter = document.getElementById("diameter");
+      var arr_diameter = source.map(function (obj){
+        return obj.diameter;
+      });
+      var unique_diameter = arr_diameter.filter(onlyUnique);
+      diameter.innerHTML += "<option value=''>--- pilih</option>"
+      unique_diameter.forEach(function(item){
+        diameter.innerHTML += "<option value='"+ item + "'>" + item + "</option>";
+      });      
+      //filtering diameter
+      function select_diameter(){
+        var change_diameter = document.getElementById("diameter").value;
+        var filtered_diameter = source.filter(function(diameter){
+          return diameter.diameter === change_diameter;
+        });
+        var number = 1;
+        view.innerHTML = "";
+        filtered_diameter.forEach(function(item){
+          view.innerHTML += "<tr><td align='center'><b>" + number++ + "</b></td><td>" + item.name + "</td><td>" + item.rotation_period + "</td><td>" + item.orbital_period + "</td><td>" + item.diameter + "</td><td>" + item.climate + "</td><td>" + item.gravity + "</td><td>" + item.terrain + "</td><td>" + item.surface_water + "</td><td>" + item.population + "</td></tr>";
+        });
+      }
+
+      //climate
+      climate = document.getElementById("climate");
+      var arr_climate = source.map(function (obj){
+        return obj.climate;
+      });
+      var unique_climate = arr_climate.filter(onlyUnique);
+      climate.innerHTML += "<option value=''>--- pilih</option>"
+      unique_climate.forEach(function(item){
+        climate.innerHTML += "<option value='"+ item + "'>" + item + "</option>"; 
+      });       
+      //filtering climate
+      function select_climate(){
+        var change_climate = document.getElementById("climate").value;
+        var filtered_climate = source.filter(function(climate){
+          return climate.climate === change_climate;
+        });
+        var number = 1;
+        view.innerHTML = "";
+        filtered_climate.forEach(function(item){
+          view.innerHTML += "<tr><td align='center'><b>" + number++ + "</b></td><td>" + item.name + "</td><td>" + item.rotation_period + "</td><td>" + item.orbital_period + "</td><td>" + item.diameter + "</td><td>" + item.climate + "</td><td>" + item.gravity + "</td><td>" + item.terrain + "</td><td>" + item.surface_water + "</td><td>" + item.population + "</td></tr>";
+        });
+      }
+
+      //gravity
+      gravity = document.getElementById("gravity");
+      var arr_gravity = source.map(function (obj){
+        return obj.gravity;
+      });
+      var unique_gravity = arr_gravity.filter(onlyUnique);
+      gravity.innerHTML += "<option value=''>--- pilih</option>"
+      unique_gravity.forEach(function(item){
+        gravity.innerHTML += "<option value='"+ item + "'>" + item + "</option>"; 
+      });    
+      //filtering gravity
+      function select_gravity(){
+        var change_gravity = document.getElementById("gravity").value;
+        var filtered_gravity = source.filter(function(gravity){
+          return gravity.gravity === change_gravity;
+        });
+        var number = 1;
+        view.innerHTML = "";
+        filtered_gravity.forEach(function(item){
+          view.innerHTML += "<tr><td align='center'><b>" + number++ + "</b></td><td>" + item.name + "</td><td>" + item.rotation_period + "</td><td>" + item.orbital_period + "</td><td>" + item.diameter + "</td><td>" + item.climate + "</td><td>" + item.gravity + "</td><td>" + item.terrain + "</td><td>" + item.surface_water + "</td><td>" + item.population + "</td></tr>";
+        });
+      }
+
+      //terrain
+      terrain = document.getElementById("terrain");
+      var arr_terrain = source.map(function (obj){
+        return obj.terrain;
+      });
+      var unique_terrain = arr_terrain.filter(onlyUnique);
+      terrain.innerHTML += "<option value=''>--- pilih</option>"
+      unique_terrain.forEach(function(item){
+        terrain.innerHTML += "<option value='"+ item + "'>" + item + "</option>"; 
+      });        
+      //filtering terrain
+      function select_terrain(){
+        var change_terrain = document.getElementById("terrain").value;
+        var filtered_terrain = source.filter(function(terrain){
+          return terrain.terrain === change_terrain;
+        });
+        var number = 1;
+        view.innerHTML = "";
+        filtered_terrain.forEach(function(item){
+          view.innerHTML += "<tr><td align='center'><b>" + number++ + "</b></td><td>" + item.name + "</td><td>" + item.rotation_period + "</td><td>" + item.orbital_period + "</td><td>" + item.diameter + "</td><td>" + item.climate + "</td><td>" + item.gravity + "</td><td>" + item.terrain + "</td><td>" + item.surface_water + "</td><td>" + item.population + "</td></tr>";
+        });
+      }
+
+      //surface_water
+      surface_water = document.getElementById("surface_water");
+      var arr_surface_w = source.map(function (obj){
+        return obj.surface_water;
+      });
+      var unique_surface_w = arr_surface_w.filter(onlyUnique);
+      surface_water.innerHTML += "<option value=''>--- pilih</option>"
+      unique_surface_w.forEach(function(item){
+        surface_water.innerHTML += "<option value='"+ item + "'>" + item + "</option>"; 
+      });   
+      //filtering surface_water
+      function select_surface(){
+        var change_surface = document.getElementById("surface_water").value;
+        var filtered_surface = source.filter(function(surface){
+          return surface.surface_water === change_surface;
+        });
+        var number = 1;
+        view.innerHTML = "";
+        filtered_surface.forEach(function(item){
+          view.innerHTML += "<tr><td align='center'><b>" + number++ + "</b></td><td>" + item.name + "</td><td>" + item.rotation_period + "</td><td>" + item.orbital_period + "</td><td>" + item.diameter + "</td><td>" + item.climate + "</td><td>" + item.gravity + "</td><td>" + item.terrain + "</td><td>" + item.surface_water + "</td><td>" + item.population + "</td></tr>";
+        });
+      }
+
+      //population
+      population = document.getElementById("population");
+      var arr_population = source.map(function (obj){
+        return obj.population;
+      });
+      var unique_population = arr_population.filter(onlyUnique);
+      population.innerHTML += "<option value=''>--- pilih</option>"
+      unique_population.forEach(function(item){
+        population.innerHTML += "<option value='"+ item + "'>" + item + "</option>"; 
+      });  
+      //filtering population
+      function select_population(){
+        var change_population = document.getElementById("population").value;
+        var filtered_population = source.filter(function(population){
+          return population.population === change_population;
+        });
+        var number = 1;
+        view.innerHTML = "";
+        filtered_population.forEach(function(item){
+          view.innerHTML += "<tr><td align='center'><b>" + number++ + "</b></td><td>" + item.name + "</td><td>" + item.rotation_period + "</td><td>" + item.orbital_period + "</td><td>" + item.diameter + "</td><td>" + item.climate + "</td><td>" + item.gravity + "</td><td>" + item.terrain + "</td><td>" + item.surface_water + "</td><td>" + item.population + "</td></tr>";
+        });
+      }     
+    </script>
+  </body>
+</html>
